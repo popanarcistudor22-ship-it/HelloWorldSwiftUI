@@ -1,0 +1,24 @@
+workflows:
+  ios-unsigned:
+    name: Build Unsigned IPA
+    environment:
+      xcode: latest
+    working_directory: helloworldtextfield
+    scripts:
+      - name: Compileaza aplicatia fara semnatura
+        script: |
+          xcodebuild build \
+            -scheme HelloWorld \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            -sdk iphoneos \
+            -configuration Release \
+            -derivedDataPath build_output
+      - name: Impacheteaza in .ipa
+        script: |
+          mkdir -p Payload
+          mv build_output/Build/Products/Release-iphoneos/*.app Payload/
+          zip -r BaterieApp.ipa Payload
+    artifacts:
+      - BaterieApp.ipa
