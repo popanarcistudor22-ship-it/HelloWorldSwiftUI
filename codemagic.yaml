@@ -3,7 +3,6 @@ workflows:
     name: Build Unsigned IPA
     environment:
       xcode: latest
-      macos: latest
     working_directory: helloworldtextfield
     scripts:
       - name: Compileaza aplicatia fara semnatura
